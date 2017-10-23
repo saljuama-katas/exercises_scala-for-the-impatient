@@ -113,5 +113,20 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 9" - {
+      """--------
+        |How do you get the first character of a string in Scala? The last character?
+      """.stripMargin in {
+
+        val string = "Hello World!"
+
+        string.head should be('H')
+        string.last should be('!')
+
+        info("The first character is accessed with the `head` method")
+        info("The last character is accessed with the `last` method")
+      }
+    }
+
   }
 }
