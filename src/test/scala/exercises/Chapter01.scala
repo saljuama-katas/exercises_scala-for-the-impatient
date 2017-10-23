@@ -32,5 +32,16 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+
+    "Exercise 3" - {
+      """--------
+        |Are the res variables val or var?
+      """.stripMargin in {
+
+        info("The `res` variables in the REPL are `val`")
+      }
+    }
+
+
   }
 }
