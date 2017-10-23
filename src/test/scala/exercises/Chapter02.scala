@@ -62,10 +62,23 @@ class Chapter02 extends FreeSpec with Matchers {
         |  for (int i = 10; i >= 0; i--) System.out.println(i);
       """.stripMargin in {
 
-        val result = for (i <- (0 to 10).reverse) yield i
+        val result = for (i <- (0 to 10).reverse) yield i // println(i)
         // replaced println because it is not testable
 
         result should be(Vector(10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
+      }
+    }
+
+    "Exercise 5" - {
+      """--------
+        |Write a procedure countdown(n: Int) that prints the numbers from n to 0.
+      """.stripMargin in {
+
+        def countdown(n: Int) = {
+          for (i <- (0 to n).reverse) yield i // println(i)
+        }
+
+        countdown(5) should be(Vector(5, 4, 3, 2, 1, 0))
       }
     }
 
