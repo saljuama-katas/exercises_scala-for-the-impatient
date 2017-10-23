@@ -81,5 +81,20 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 7" - {
+      """--------
+        |What do you need to import so that you can get a random prime as probablePrime(100, Random),
+        |without any qualifiers before probablePrime and Random?
+      """.stripMargin in {
+
+        import BigInt.probablePrime
+        import util.Random
+
+        probablePrime(100, Random)
+
+        info("required imports: `BigInt.probablePrime` and `(scala.)util.Random`")
+      }
+    }
+
   }
 }
