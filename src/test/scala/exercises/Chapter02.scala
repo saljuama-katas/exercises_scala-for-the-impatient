@@ -88,11 +88,7 @@ class Chapter02 extends FreeSpec with Matchers {
         |For example, the product of the characters in "Hello" is 9415087488L.
       """.stripMargin in {
 
-        def unicodeProduct(string: String): Long = {
-          (for (character <- string) yield character.toLong).product
-        }
-
-        unicodeProduct("Hello") should be(9415087488L)
+        (for (character <- "Hello") yield character.toLong).product should be(9415087488L)
       }
     }
 
@@ -101,16 +97,20 @@ class Chapter02 extends FreeSpec with Matchers {
         |Solve the preceding exercise without writing a loop. (Hint: Look at the StringOps Scaladoc.)
       """.stripMargin in {
 
-        def unicodeProductWithMap(string: String) = {
-          string.map(_.toLong).product
-        }
+        "Hello".map(_.toLong).product should be(9415087488L)
+        "Hello".foldLeft(1L)(_ * _.toLong) should be(9415087488L)
+      }
+    }
 
-        def unicodeProductWithFold(string: String) = {
-          string.foldLeft(1L)(_ * _.toLong)
-        }
+    "Exercise 8" - {
+      """--------
+        |Write a function product(s : String) that computes the product,
+        |as described in the preceding exercises.
+      """.stripMargin in {
 
-        unicodeProductWithMap("Hello") should be(9415087488L)
-        unicodeProductWithFold("Hello") should be(9415087488L)
+        def product(s: String) = s.map(_.toLong).product
+
+        product("Hello") should be(9415087488L)
       }
     }
 
