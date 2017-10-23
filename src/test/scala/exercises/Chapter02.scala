@@ -96,5 +96,23 @@ class Chapter02 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 7" - {
+      """--------
+        |Solve the preceding exercise without writing a loop. (Hint: Look at the StringOps Scaladoc.)
+      """.stripMargin in {
+
+        def unicodeProductWithMap(string: String) = {
+          string.map(_.toLong).product
+        }
+
+        def unicodeProductWithFold(string: String) = {
+          string.foldLeft(1L)(_ * _.toLong)
+        }
+
+        unicodeProductWithMap("Hello") should be(9415087488L)
+        unicodeProductWithFold("Hello") should be(9415087488L)
+      }
+    }
+
   }
 }
