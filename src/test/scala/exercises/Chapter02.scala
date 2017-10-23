@@ -25,5 +25,20 @@ class Chapter02 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 2" - {
+      """--------
+        |What is the value of an empty block expression {}? What is its type?
+      """.stripMargin in {
+
+        val emptyBlock = {}
+
+        emptyBlock should be(())
+        emptyBlock.getClass should be(classOf[Unit])
+
+        info("The value of `{}` is `()`")
+        info("The type of `{}` is `Unit`")
+      }
+    }
+
   }
 }
