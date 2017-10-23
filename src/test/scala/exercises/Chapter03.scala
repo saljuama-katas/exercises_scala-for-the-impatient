@@ -113,5 +113,17 @@ class Chapter03 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 7" - {
+      """--------
+        |Write a code snippet that produces all values from an array with duplicates
+        |removed. (Hint: Look at Scaladoc.)
+      """.stripMargin in {
+
+        val array = Array(2, 4, 2, 5, 1, 5, 3)
+
+        array.distinct should be(Array(2, 4, 5, 1, 3))
+      }
+    }
+
   }
 }
