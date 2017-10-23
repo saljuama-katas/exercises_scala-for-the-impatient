@@ -128,5 +128,24 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 10" - {
+      """---------
+        |What do the take, drop, takeRight, and dropRight string functions do? What advantage or
+        |disadvantage do they have over using substring?
+      """.stripMargin in {
+
+        val string = "Hello World!"
+
+        string.take(3) should be("Hel")
+        string.drop(3) should be("lo World!")
+        string.takeRight(3) should be("ld!")
+        string.dropRight(3) should be("Hello Wor")
+
+        info("The `take` method takes the first N characters of a string")
+        info("The `drop` method ignores the first N characters of a string")
+        info("The `takeRight` method takes the last N characters of a string")
+        info("The `dropRight` method ignores the last N characters of a string")
+      }
+    }
   }
 }
