@@ -96,5 +96,22 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 8" - {
+      """--------
+        |One way to create random file or directory names is to produce a random BigInt and convert
+        |it to base 36, yielding a string such as "qsnvbevtomcj38o06kul". Poke around Scaladoc to
+        |find a way of doing this in Scala.
+      """.stripMargin in {
+
+        import BigInt.probablePrime
+        import util.Random
+
+        val rndNumber = probablePrime(100, Random)
+        val rndString = rndNumber.toString(36)
+
+        info(s"result = $rndString")
+      }
+    }
+
   }
 }
