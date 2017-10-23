@@ -56,6 +56,18 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 5" - {
+      """--------
+        |What does 10 max 2 mean? In which class is the max method defined?
+      """.stripMargin in {
+
+        val result = 10 max 2
+        result should be(10)
+
+        info(s"This is the equivalent of executing 10.max(2) and returns $result")
+        info("`max` is defined in the `RichInt` class")
+      }
+    }
 
   }
 }
