@@ -45,5 +45,28 @@ class Chapter03 extends FreeSpec with Matchers {
         array should be(Array(2, 1, 4, 3, 5))
       }
     }
+
+    "Exercise 3" - {
+      """--------
+        |Repeat the preceding assignment, but produce a new array with the swapped values.
+        |Use for/yield.
+      """.stripMargin in {
+
+        val array = Array(1, 2, 3, 4, 5)
+
+        val result = (for (i <- array.indices) yield
+          if (i % 2 == 0)
+            if (i < array.length - 1)
+              array(i + 1)
+            else
+              array(i)
+          else
+            array(i - 1)
+          ).toArray
+
+        result should be(Array(2, 1, 4, 3, 5))
+      }
+    }
+
   }
 }
