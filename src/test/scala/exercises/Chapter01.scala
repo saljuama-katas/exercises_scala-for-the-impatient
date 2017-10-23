@@ -69,5 +69,17 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 6" - {
+      """--------
+        |Using BigInt, compute 2 ** 1024.
+      """.stripMargin in {
+
+        val base: BigInt = 2
+        val result = base.pow(1024)
+
+        info(s"result = $result")
+      }
+    }
+
   }
 }
