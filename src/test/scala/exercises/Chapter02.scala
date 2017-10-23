@@ -55,5 +55,19 @@ class Chapter02 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 4" - {
+      """--------
+        |Write a Scala equivalent for the Java loop
+        |
+        |  for (int i = 10; i >= 0; i--) System.out.println(i);
+      """.stripMargin in {
+
+        val result = for (i <- (0 to 10).reverse) yield i
+        // replaced println because it is not testable
+
+        result should be(Vector(10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
+      }
+    }
+
   }
 }
