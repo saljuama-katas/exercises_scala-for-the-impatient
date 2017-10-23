@@ -128,5 +128,37 @@ class Chapter02 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 10" - {
+      """---------
+        |Write a function that computes x ** n, where n is an integer.
+        |Use the following recursive definition:
+        |
+        |  • x ** n = y * y if n is even and positive, where y = x ** (n / 2).
+        |  • x ** n = x * x ** (n – 1) if n is odd and positive.
+        |  • x ** 0 = 1.
+        |  • x ** n = 1 / x ** –n if n is negative.
+        |
+        |Don’t use a return statement.
+      """.stripMargin in {
+
+        def power(x: Int, n: Int): Double = {
+          if (n > 0) {
+            if (n % 2 == 0)
+              power(x, n / 2) * power(x, n / 2)
+            else
+              x * power(x, n - 1)
+          }
+          else if (n == 0)
+            1
+          else
+            1 / power(x, -n)
+        }
+
+        power(10, 0) should be(1)
+        power(10, 2) should be(100)
+        power(10, -2) should be(0.01)
+      }
+    }
+
   }
 }
