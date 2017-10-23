@@ -97,5 +97,21 @@ class Chapter03 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 6" - {
+      """--------
+        |How do you rearrange the elements of an Array[Int] so that they appear in
+        |reverse sorted order? How do you do the same with an ArrayBuffer[Int]?
+      """.stripMargin in {
+
+        import collection.mutable.ArrayBuffer
+
+        val array = Array(3, 1, 6, 2, -1, 4)
+        val arrayBuffer = ArrayBuffer(3, 1, 6, 2, -1, 4)
+
+        array.sorted.reverse should be(Array(6, 4, 3, 2, 1, -1))
+        arrayBuffer.sorted.reverse should be(ArrayBuffer(6, 4, 3, 2, 1, -1))
+      }
+    }
+
   }
 }
