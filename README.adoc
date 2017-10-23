@@ -1,0 +1,35 @@
+= Scala for the Impatient: Exercises
+
+These are my solutions to the exercises proposed in the
+https://www.amazon.com/Scala-Impatient-2nd-Cay-Horstmann/dp/0134540565[Scala for the Impatient 2nd Edition Book].
+The implementation has been done using:
+
+* Scala 2.12.4
+* Scalatest 3.0.4
+* SBT 1.0.2
+
+And the exercises are implemented in tests, using `FreeSpec` in scalatest.
+
+
+== Executing the exercises
+
+To run the tests / execute the exercises, you can run in the terminal:
+
+    sbt test
+
+or to run just a specific chapter (XX):
+
+    sbt testOnly exercises.ChapterXX
+
+
+CAUTION: *IntelliJ IDEA users*: With SBT 1.0.2 there is a bug where the IDE test runner does not work with a Scala version
+other than 2.12.3. In the SBT 1.0.3 release, this issue will be fixed. In the meantime, you can downgrade Scala to
+2.12.3 in the `build.sbt` file, or you can run the tests in an SBT shell instead.
+
+
+== Additional notes
+
+Some exercises are plain questions, and there is no implementation to be done. For such cases, there is still a test
+present, but it tests nothing, just displays the answers using a `scalatest Informer` with `info(...)`
+
+Ignored tests represent exercises that haven't been completed yet, so it is easy to spot them.
