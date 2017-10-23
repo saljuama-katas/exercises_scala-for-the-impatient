@@ -68,5 +68,22 @@ class Chapter03 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 4" - {
+      """--------
+        |Given an array of integers, produce a new array that contains all positive
+        |values of the original array, in their original order, followed by all values
+        |that are zero or negative, in their original order.
+      """.stripMargin in {
+
+        val array = Array(1, -2, 3, 0, -5, 7, 4, -2, 0, 5)
+
+        val positives = for (x <- array if x > 0) yield x
+        val nonPositives = for (x <- array if x <= 0) yield x
+        val result = positives ++ nonPositives
+
+        result should be(Array(1, 3, 7, 4, 5, -2, 0, -5, -2, 0))
+      }
+    }
+
   }
 }
