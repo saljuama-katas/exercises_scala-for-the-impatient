@@ -152,9 +152,36 @@ class Chapter03 extends FreeSpec with Matchers {
         val array = ArrayBuffer(1, 2, 3, -1, 4, 5, -2, 6, -7, -3, 7)
 
         val negativeIndices = (for (i <- array.indices if array(i) <= 0) yield i).drop(1).reverse
-        for (index <- negativeIndices) array.remove(index)
+        negativeIndices.foreach(array.remove)
 
         array should be(ArrayBuffer(1, 2, 3, -1, 4, 5, 6, 7))
+      }
+    }
+
+    "Exercise 9" - {
+      """--------
+        |Improve the solution of the preceding exercise by collecting the positions that
+        |should be moved and their target positions. Make those moves and truncate the
+        |buffer. Don’t copy any elements before the first unwanted element.
+      """.stripMargin ignore {
+
+      }
+    }
+
+    "Exercise 10" - {
+      """---------
+        |Make a collection of all timezones returned by java.util.TimeZone.getAvailableIDs
+        |that are in America. Strip off the "America/" prefix and sort the result.
+      """.stripMargin in {
+
+        import java.util.TimeZone
+
+        val americanTimezones = TimeZone.getAvailableIDs
+          .filter(_.contains("America"))
+          .map(_.stripPrefix("America/"))
+          .sorted
+
+        americanTimezones should have length 166
       }
     }
 
