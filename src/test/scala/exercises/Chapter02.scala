@@ -114,5 +114,19 @@ class Chapter02 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 9" - {
+      """--------
+        |Make the function of the preceding exercise a recursive function.
+      """.stripMargin in {
+
+        def product(s: String): Long = {
+          if (s.isEmpty) 1L
+          else s.head.toLong * product(s.tail)
+        }
+
+        product("Hello") should be(9415087488L)
+      }
+    }
+
   }
 }
