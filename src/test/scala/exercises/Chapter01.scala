@@ -16,5 +16,21 @@ class Chapter01 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 2" - {
+      """--------
+        |In the Scala REPL, compute the square root of 3, and then square that value.
+        |By how much does the result differ from 3?
+      """.stripMargin in {
+
+        import math.sqrt
+
+        val first = sqrt(3)
+        val result = sqrt(first)
+
+        result should be(sqrt(sqrt(3)))
+        info(s"The result is $result and differs from 3 in ${3 - result}")
+      }
+    }
+
   }
 }
