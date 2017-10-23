@@ -85,5 +85,17 @@ class Chapter03 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 5" - {
+      """--------
+        |How do you compute the average of an Array[Double]?
+      """.stripMargin in {
+
+        val array = Array(1.0, 2.0)
+        val average = array.sum / array.length
+
+        average should be(1.5)
+      }
+    }
+
   }
 }
