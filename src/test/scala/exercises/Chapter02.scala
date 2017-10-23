@@ -82,5 +82,19 @@ class Chapter02 extends FreeSpec with Matchers {
       }
     }
 
+    "Exercise 6" - {
+      """--------
+        |Write a for loop for computing the product of the Unicode codes of all letters in a string.
+        |For example, the product of the characters in "Hello" is 9415087488L.
+      """.stripMargin in {
+
+        def unicodeProduct(string: String): Long = {
+          (for (character <- string) yield character.toLong).product
+        }
+
+        unicodeProduct("Hello") should be(9415087488L)
+      }
+    }
+
   }
 }
