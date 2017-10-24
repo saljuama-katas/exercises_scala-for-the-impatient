@@ -12,8 +12,23 @@ class Chapter04 extends FreeSpec with Matchers {
         |Set up a map of prices for a number of gizmos that you covet.
         |Then produce a second map with the same keys and the prices
         |at a 10 percent discount.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        var gizmos = Map(
+          "gadget1" -> 10.0,
+          "gadget2" -> 50.0,
+          "gadget3" -> 7.0,
+          "gadget4" -> 15.0
+        )
+
+        val gizmosWithDiscount = gizmos.map { t => (t._1, t._2 * 0.9) }
+
+        gizmosWithDiscount should be(Map(
+          "gadget1" -> 9.0,
+          "gadget2" -> 45.0,
+          "gadget3" -> 6.3,
+          "gadget4" -> 13.5
+        ))
       }
     }
 
