@@ -14,7 +14,7 @@ class Chapter04 extends FreeSpec with Matchers {
         |at a 10 percent discount.
       """.stripMargin in {
 
-        var gizmos = Map(
+        val gizmos = Map(
           "gadget1" -> 10.0,
           "gadget2" -> 50.0,
           "gadget3" -> 7.0,
@@ -43,8 +43,28 @@ class Chapter04 extends FreeSpec with Matchers {
         |
         |Or look at Chapter 9 for a Scalaesque way.
         |At the end, print out all words and their counts.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import collection.mutable
+
+        var wordCount = mutable.HashMap[String, Int]()
+        val content = io.Source.fromResource("chapter4exercise2.txt").getLines.mkString.split(" ")
+        for (word <- content) {
+          val count = wordCount.getOrElse(word, 0) + 1
+          wordCount += word -> count
+        }
+
+        wordCount should be(mutable.HashMap(
+          "this" -> 1,
+          "is" -> 3,
+          "just" -> 1,
+          "an" -> 2,
+          "example" -> 2,
+          "which" -> 1,
+          "silly" -> 2,
+          "but" -> 1,
+          "sometimes" -> 1
+        ))
       }
     }
 
@@ -53,6 +73,7 @@ class Chapter04 extends FreeSpec with Matchers {
         |Repeat the preceding exercise with an immutable map.
       """.stripMargin ignore {
 
+        val content = io.Source.fromResource("chapter4exercise3.txt").getLines.mkString.split(" ")
       }
     }
 
