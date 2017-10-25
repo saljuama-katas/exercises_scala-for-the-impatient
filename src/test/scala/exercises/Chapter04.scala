@@ -224,8 +224,11 @@ class Chapter04 extends FreeSpec with Matchers {
       """--------
         |Write a function minmax(values: Array[Int]) that returns a pair containing
         |the smallest and the largest values in the array.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        def minmax(values: Array[Int]) = (values.min, values.max)
+
+        minmax(Array(10, 15, -2, 7, 11, 8, -7)) should be((-7, 15))
       }
     }
 
