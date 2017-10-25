@@ -100,8 +100,31 @@ class Chapter04 extends FreeSpec with Matchers {
       """--------
         |Repeat the preceding exercise with a sorted map, so that the words
         |are printed in sorted order.
-      """.stripMargin ignore {
+      """.stripMargin in {
+        info("sorting by key can be achieved using `mutable.SortedMap`")
+        info("sorting by insertion order can be achieved using `mutable.LinkedHashMap`")
 
+        import collection.mutable
+
+        val wordCount = mutable.SortedMap[String, Int]()
+        val content = io.Source.fromResource("chapter4.txt").getLines.mkString.split(" ")
+
+        content.foreach { word =>
+          val count = wordCount.getOrElse(word, 0) + 1
+          wordCount(word) = count
+        }
+
+        wordCount should be(mutable.SortedMap(
+          "this" -> 1,
+          "is" -> 3,
+          "just" -> 1,
+          "an" -> 2,
+          "example" -> 2,
+          "which" -> 1,
+          "silly" -> 2,
+          "but" -> 1,
+          "sometimes" -> 1
+        ))
       }
     }
 
