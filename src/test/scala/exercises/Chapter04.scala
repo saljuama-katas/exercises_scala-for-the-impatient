@@ -251,10 +251,17 @@ class Chapter04 extends FreeSpec with Matchers {
 
     "Exercise 10" - {
       """---------
-        |Whathappenswhenyouziptogethertwostrings,suchas"Hello".zip("World")? Come up
+        |What happens when you zip together two strings, such as "Hello".zip("World")? Come up
         |with a plausible use case.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        info("zipping 2 strings return a collection of tuples 2 characters")
+        info("the size of the collection is equal to the length of the shortest string")
+        info("the exceeding characters on the longest string are ignored")
+
+        val veryFragileEncrypt = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".zip("UGWIQHVCYNJOALPZEDFTRSXBKM").toMap
+
+        "SAYHELLO".map(veryFragileEncrypt) should be("FUKCQOOP")
       }
     }
   }
