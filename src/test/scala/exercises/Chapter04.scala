@@ -1,6 +1,10 @@
 package exercises
 
+import java.util
+
 import org.scalatest.{FreeSpec, Matchers}
+
+import scala.collection.mutable
 
 
 class Chapter04 extends FreeSpec with Matchers {
@@ -132,8 +136,29 @@ class Chapter04 extends FreeSpec with Matchers {
       """--------
         |Repeat the preceding exercise with a java.util.TreeMap that you
         |adapt to the Scala API.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import collection.JavaConverters._
+
+        val wordCount = new util.TreeMap[String, Int]().asScala
+        val content = io.Source.fromResource("chapter4.txt").getLines.mkString.split(" ")
+
+        content.foreach { word =>
+          val count = wordCount.getOrElse(word, 0) + 1
+          wordCount(word) = count
+        }
+
+        wordCount should be(mutable.Map(
+          "this" -> 1,
+          "is" -> 3,
+          "just" -> 1,
+          "an" -> 2,
+          "example" -> 2,
+          "which" -> 1,
+          "silly" -> 2,
+          "but" -> 1,
+          "sometimes" -> 1
+        ))
       }
     }
 
