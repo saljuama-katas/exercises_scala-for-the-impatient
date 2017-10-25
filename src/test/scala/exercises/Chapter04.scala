@@ -47,11 +47,12 @@ class Chapter04 extends FreeSpec with Matchers {
 
         import collection.mutable
 
-        var wordCount = mutable.HashMap[String, Int]()
-        val content = io.Source.fromResource("chapter4exercise2.txt").getLines.mkString.split(" ")
-        for (word <- content) {
+        val wordCount = mutable.HashMap[String, Int]()
+        val content = io.Source.fromResource("chapter4.txt").getLines.mkString.split(" ")
+
+        content.foreach { word =>
           val count = wordCount.getOrElse(word, 0) + 1
-          wordCount += word -> count
+          wordCount(word) = count
         }
 
         wordCount should be(mutable.HashMap(
@@ -71,9 +72,27 @@ class Chapter04 extends FreeSpec with Matchers {
     "Exercise 3" - {
       """--------
         |Repeat the preceding exercise with an immutable map.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
-        val content = io.Source.fromResource("chapter4exercise3.txt").getLines.mkString.split(" ")
+        var wordCount = Map[String, Int]()
+        val content = io.Source.fromResource("chapter4.txt").getLines.mkString.split(" ")
+
+        content.foreach { word =>
+          val count = wordCount.getOrElse(word, 0) + 1
+          wordCount += (word -> count)
+        }
+
+        wordCount should be(Map(
+          "this" -> 1,
+          "is" -> 3,
+          "just" -> 1,
+          "an" -> 2,
+          "example" -> 2,
+          "which" -> 1,
+          "silly" -> 2,
+          "but" -> 1,
+          "sometimes" -> 1
+        ))
       }
     }
 
