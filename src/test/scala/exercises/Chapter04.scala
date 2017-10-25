@@ -201,8 +201,22 @@ class Chapter04 extends FreeSpec with Matchers {
         |  java.vm.name            |  Java HotSpot(TM) Server VM
         |
         |You need to find the length of the longest key before you can print the table.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import collection.JavaConverters._
+
+        val properties = System.getProperties.asScala
+        val keyMaxSize = properties.keys.map(_.length).max
+
+        def printLine(key: String, value: String, keySize: Int) = {
+          val extraSpaces = " " * (keySize - key.length)
+          val line = s"  $key$extraSpaces  |  $value"
+          println(line)
+        }
+
+        for ((key, value) <- properties) printLine(key, value, keyMaxSize)
+
+        // No assertions on this exercise as it can vary in different systems
       }
     }
 
