@@ -226,7 +226,8 @@ class Chapter04 extends FreeSpec with Matchers {
         |the smallest and the largest values in the array.
       """.stripMargin in {
 
-        def minmax(values: Array[Int]) = (values.min, values.max)
+        def minmax(values: Array[Int]) =
+          (values.min, values.max)
 
         minmax(Array(10, 15, -2, 7, 11, 8, -7)) should be((-7, 15))
       }
@@ -236,8 +237,15 @@ class Chapter04 extends FreeSpec with Matchers {
       """--------
         |Write a function lteqgt(values: Array[Int], v: Int) that returns a triple
         |containing the counts of values less than v, equal to v, and greater than v.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        def lteggt(values: Array[Int], v: Int) =
+          (values.count(_ < v), values.count(_ == v), values.count(_ > v))
+
+        val array = Array(1, 2, 3, 4, 5, 6)
+        lteggt(array, 4) should be((3, 1, 2))
+        lteggt(array, 7) should be((6, 0, 0))
+        lteggt(array, 0) should be((0, 0, 6))
       }
     }
 
