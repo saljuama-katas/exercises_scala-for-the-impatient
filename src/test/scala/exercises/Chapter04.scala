@@ -167,8 +167,23 @@ class Chapter04 extends FreeSpec with Matchers {
         |Define a linked hash map that maps "Monday" to java.util.Calendar.MONDAY,
         |and similarly for the other weekdays. Demonstrate that the elements are
         |visited in insertion order.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import java.util.Calendar._
+
+        import collection.mutable
+
+        val weekdays = mutable.LinkedHashMap[String, Int]()
+        weekdays("Monday") = MONDAY
+        weekdays("Tuesday") = TUESDAY
+        weekdays("Wednesday") = WEDNESDAY
+        weekdays("Thursday") = THURSDAY
+        weekdays("Friday") = FRIDAY
+        weekdays("Saturday") = SATURDAY
+        weekdays("Sunday") = SUNDAY
+
+        val sequenceOfDays = for ((_, value) <- weekdays) yield value
+        sequenceOfDays should be(Seq(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY))
       }
     }
 
