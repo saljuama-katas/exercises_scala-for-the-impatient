@@ -214,8 +214,21 @@ class Chapter05 extends FreeSpec with Matchers {
         |a first name, a space, and a last name, such as new Person("Fred Smith"). Supply
         |read-only properties firstName and lastName. Should the primary constructor
         |parameter be a var, a val, or a plain parameter? Why?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Person(val fullName: String) {
+          def firstName: String = fullName.split(" ").head
+
+          def lastName: String = fullName.split(" ").last
+        }
+
+        val peterSmith = new Person("Peter Smith")
+        peterSmith.firstName should be("Peter")
+        peterSmith.lastName should be("Smith")
+
+        info("The constructor argument could be a val if you want to expose the full name")
+        info("The constructor argument could be a parameter if you don't want to expose the full name")
+        info("The constructor argument could be a var if you want to expose the full name, and also make it mutable :(")
       }
     }
 
