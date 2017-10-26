@@ -91,8 +91,26 @@ class Chapter07 extends FreeSpec with Matchers {
       """--------
         |Write a program that copies all elements from a Java hash map into a
         |Scala hash map. Use imports to rename both classes.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import java.util.{HashMap => JavaMap}
+
+        import collection.mutable.{HashMap => ScalaMap}
+
+        def copyMap[K <: Any, V <: Any](input: JavaMap[K, V]): ScalaMap[K, V] = {
+          val result = new ScalaMap[K, V]()
+          input forEach { (k, v) => result += k -> v }
+          result
+        }
+
+        val javaMap = new JavaMap[Int, String]()
+        javaMap.put(1, "Hello")
+        javaMap.put(2, "World")
+        val scalaMap: ScalaMap[Int, String] = copyMap(javaMap)
+
+        scalaMap.size shouldBe 2
+        scalaMap(1) shouldBe "Hello"
+        scalaMap.get(2) shouldBe Some("World")
       }
     }
 
