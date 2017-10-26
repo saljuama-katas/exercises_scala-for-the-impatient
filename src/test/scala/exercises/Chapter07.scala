@@ -46,8 +46,23 @@ class Chapter07 extends FreeSpec with Matchers {
         |
         |where a = 1664525, b = 1013904223, n = 32, and the initial value of previous
         |is seed.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        // see implementation after Chapter07 spec class
+        import random._
+
+        setSeed(10)
+        val firstInt = nextInt()
+        val secondInt = nextInt()
+        val firstDouble = nextDouble()
+        val secondDouble = nextDouble()
+
+        val calculatedNextInt = (seed: Int) => (seed * 1664525 + 1013904223) % math.pow(2.0, 32).toInt
+        val calculatedNextDouble = (seed: Double) => (seed * 1664525 + 1013904223) % math.pow(2.0, 32)
+        firstInt should be(calculatedNextInt(10))
+        secondInt should be(calculatedNextInt(firstInt))
+        firstDouble should be(calculatedNextDouble(10.0))
+        secondDouble should be(calculatedNextDouble(firstDouble))
       }
     }
 
@@ -117,5 +132,34 @@ class Chapter07 extends FreeSpec with Matchers {
 
       }
     }
+  }
+}
+
+
+package object random {
+
+  private val a = 1664525
+  private val b = 1013904223
+  private val n = 32
+  private var seed: Int = 1
+  private var lastInt: Int = seed
+  private var lastDouble: Double = seed
+
+  def setSeed(seed: Int) {
+    this.seed = seed
+    this.lastInt = seed
+    this.lastDouble = seed
+  }
+
+  def nextInt(): Int = {
+    val newInt: Int = (lastInt * a + b) % math.pow(2.0, n).toInt
+    lastInt = newInt
+    newInt
+  }
+
+  def nextDouble(): Double = {
+    val newDouble: Double = (lastDouble * a + b) % math.pow(2.0, n)
+    lastDouble = newDouble
+    newDouble
   }
 }
