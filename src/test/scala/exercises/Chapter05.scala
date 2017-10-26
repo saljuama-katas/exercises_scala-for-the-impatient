@@ -246,11 +246,9 @@ class Chapter05 extends FreeSpec with Matchers {
           def this(manufacturer: String, model: String, year: Int) {
             this(manufacturer, model, year, "")
           }
-
           def this(manufacturer: String, model: String, licencePlate: String) {
             this(manufacturer, model, -1, licencePlate)
           }
-
           def this(manufacturer: String, model: String) {
             this(manufacturer, model, -1, "")
           }
@@ -285,8 +283,58 @@ class Chapter05 extends FreeSpec with Matchers {
       """--------
         |Reimplement the class of the preceding exercise in Java, C#, or C++ (your choice).
         |How much shorter is the Scala class?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        """
+          |public class Car {
+          |    private String manufacturer;
+          |    private String model;
+          |    private int year;
+          |    private String licencePlate;
+          |
+          |    public Car(String manufacturer, String model, int year, String licencePlate) {
+          |        this.manufacturer = manufacturer;
+          |        this.model = model;
+          |        this.year = year;
+          |        this.licencePlate = licencePlate;
+          |    }
+          |
+          |    public Car(String manufacturer, String model, int year) {
+          |        this(manufacturer, model, year, "");
+          |    }
+          |
+          |    public Car(String manufacturer, String model, String licencePlate) {
+          |        this(manufacturer, model, -1, licencePlate);
+          |    }
+          |
+          |    public Car(String manufacturer, String model) {
+          |        this(manufacturer, model, -1, "");
+          |    }
+          |
+          |    public String getManufacturer() {
+          |        return manufacturer;
+          |    }
+          |
+          |    public String getModel() {
+          |        return model;
+          |    }
+          |
+          |    public int getYear() {
+          |        return year;
+          |    }
+          |
+          |    public String getLicencePlate() {
+          |        return licencePlate;
+          |    }
+          |
+          |    public void setLicencePlate(String licencePlate) {
+          |        this.licencePlate = licencePlate;
+          |    }
+          |}
+        """.stripMargin
+
+        info("The implementation in Scala takes 11 lines of code")
+        info("The implementation in Java takes 36 lines of code")
       }
     }
 
