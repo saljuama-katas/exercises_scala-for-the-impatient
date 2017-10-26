@@ -348,8 +348,18 @@ class Chapter05 extends FreeSpec with Matchers {
         |
         |Rewrite it to use explicit fields and a default primary constructor.
         |Which form do you prefer? Why?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Employee(val name: String = "John Q. Public", var salary: Double = 0.0)
+
+        val defaultEmployee = new Employee()
+
+        defaultEmployee.name should be("John Q. Public")
+        defaultEmployee.salary should be(0.0)
+
+        info("I personally prefer explicit fields with default values")
+        info("It feels more expressive")
+        info("It feels more flexible, avoiding the need for many auxiliary constructors")
       }
     }
   }
