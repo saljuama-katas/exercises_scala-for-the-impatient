@@ -18,8 +18,12 @@ class Chapter07 extends FreeSpec with Matchers {
         |  package com
         |  package horstmann
         |  package impatient
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        // skipping this test as it is not possible to resolve this exercise inside a test
+
+        info("with package com.horstman.impatient the classes from packages com and com.horstman are not visible")
+        info("with the triple declaration, all classes from com, com.horstman, and com.horstman.impatient are visible")
       }
     }
 
