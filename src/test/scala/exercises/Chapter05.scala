@@ -130,8 +130,36 @@ class Chapter05 extends FreeSpec with Matchers {
         |representation is the number of minutes since midnight (between 0 and 24 × 60 – 1).
         |Do not change the public interface. That is, client code should be unaffected
         |by your change.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+
+        class Time(hrs: Int, min: Int) {
+          if (hrs < 0 || hrs > 23) throw new IllegalArgumentException("Invalid hours")
+          if (min < 0 || min > 59) throw new IllegalArgumentException("Invalid minutes")
+          private val mins = (hrs * 60) + min
+
+          def hours: Int = mins / 60
+
+          def minutes: Int = mins % 60
+
+          def before(other: Time): Boolean = this.mins < other.mins
+        }
+
+        val midnight = new Time(0, 0)
+
+        midnight.hours should be(0)
+        midnight.minutes should be(0)
+
+        "midnight.hours = 2" shouldNot compile
+        "midnight.minutes = 10" shouldNot compile
+
+        val midday = new Time(12, 0)
+
+        midnight.before(midday) should be(true)
+        midday.before(midnight) should be(false)
+
+        an[IllegalArgumentException] should be thrownBy new Time(24, 0)
+        the[IllegalArgumentException] thrownBy new Time(23, 64) should have message "Invalid minutes"
       }
     }
 
