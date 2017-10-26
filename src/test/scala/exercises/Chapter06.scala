@@ -101,8 +101,11 @@ class Chapter06 extends FreeSpec with Matchers {
         |Write a Scala application, using the App trait, that prints its command-line
         |arguments in reverse order, separated by spaces. For example, scala Reverse
         |Hello World should print World Hello.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object Application extends App {
+          for (argument <- args.reverse) print(s"$argument ")
+        }
       }
     }
 
