@@ -2,8 +2,6 @@ package exercises
 
 import org.scalatest.{FreeSpec, Matchers}
 
-import scala.util.Try
-
 
 class Chapter05 extends FreeSpec with Matchers {
 
@@ -45,6 +43,8 @@ class Chapter05 extends FreeSpec with Matchers {
       """--------
         |Write a class BankAccount with methods deposit and withdraw, and a read-only property balance.
       """.stripMargin in {
+
+        import scala.util.Try
 
         class BankAccount(initialBalance: Double) {
           private var accountBalance = initialBalance
@@ -168,8 +168,21 @@ class Chapter05 extends FreeSpec with Matchers {
         |Make a class Student with read-write JavaBeans properties name (of type String)
         |and id (of type Long). What methods are generated? (Use javap to check.) Can
         |you call the JavaBeans getters and setters in Scala? Should you?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import scala.beans.BeanProperty
+
+        class Student {
+          @BeanProperty var name: String = _
+          @BeanProperty var id: Long = _
+        }
+
+        val student = new Student()
+        student.setId(1L)
+        student.setName("Josh")
+
+        student.getId should be(1L)
+        student.getName should be("Josh")
       }
     }
 
