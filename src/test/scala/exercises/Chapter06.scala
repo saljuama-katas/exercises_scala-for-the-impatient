@@ -124,6 +124,7 @@ class Chapter06 extends FreeSpec with Matchers {
         }
 
         import CardSuite._
+
         Clubs.toString should be("♣")
         Diamonds.toString should be("♦")
         Hearts.toString should be("♥")
@@ -135,8 +136,24 @@ class Chapter06 extends FreeSpec with Matchers {
       """--------
         |Implement a function that checks whether a card suit value from the
         |preceding exercise is red.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object CardSuite extends Enumeration {
+          type CardSuite = Value
+          val Clubs: CardSuite = Value("♣")
+          val Diamonds: CardSuite = Value("♦")
+          val Hearts: CardSuite = Value("♥")
+          val Spades: CardSuite = Value("♠")
+        }
+
+        import CardSuite._
+
+        def isRed(cardSuite: CardSuite): Boolean = cardSuite == Diamonds || cardSuite == Hearts
+
+        isRed(Diamonds) should be(true)
+        isRed(Hearts) should be(true)
+        isRed(Clubs) should be(false)
+        isRed(Spades) should be(false)
       }
     }
 
