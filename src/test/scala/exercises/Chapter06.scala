@@ -72,7 +72,8 @@ class Chapter06 extends FreeSpec with Matchers {
         origin.x should be(2)
         origin.y should be(7)
 
-        info("java.awt.Point implementation offers mutability")
+        info("java.awt.Point offers mutability")
+        info("Origin represents a point that should not be moved")
       }
     }
 
@@ -80,8 +81,18 @@ class Chapter06 extends FreeSpec with Matchers {
       """--------
         |Define a Point class with a companion object so that you can construct Point
         |instances as Point(3, 4), without using new.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Point(val x: Int, val y: Int)
+
+        object Point {
+          def apply(x: Int, y: Int): Point = new Point(x, y)
+        }
+
+        val p1 = Point(3, 4)
+
+        p1.x should be(3)
+        p1.y should be(4)
       }
     }
 
