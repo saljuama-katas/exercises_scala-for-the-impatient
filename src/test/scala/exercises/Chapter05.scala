@@ -2,6 +2,8 @@ package exercises
 
 import org.scalatest.{FreeSpec, Matchers}
 
+import scala.util.Try
+
 
 class Chapter05 extends FreeSpec with Matchers {
 
@@ -42,8 +44,40 @@ class Chapter05 extends FreeSpec with Matchers {
     "Exercise 2" - {
       """--------
         |Write a class BankAccount with methods deposit and withdraw, and a read-only property balance.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class BankAccount(initialBalance: Double) {
+          private var accountBalance = initialBalance
+
+          def balance: Double = accountBalance
+
+          def deposit(amount: Double): Double = {
+            accountBalance += amount
+            accountBalance
+          }
+
+          def withdraw(amount: Double): Try[Double] = {
+            Try(if (amount > accountBalance)
+              throw new IllegalStateException("Not enough cash")
+            else {
+              accountBalance -= amount
+              accountBalance
+            })
+          }
+        }
+
+        val account = new BankAccount(10000.0)
+
+        account.balance should be(10000.0)
+        "account.balance = 15000.0" shouldNot compile
+
+        account.deposit(1000.0)
+        account.balance should be(11000.0)
+
+        account.withdraw(6000.0).isSuccess should be(true)
+        account.balance should be(5000.0)
+
+        account.withdraw(6000.0).isFailure should be(true)
       }
     }
 
