@@ -70,8 +70,11 @@ class Chapter07 extends FreeSpec with Matchers {
       """--------
         |Why do you think the Scala language designers provided the package object
         |syntax instead of simply letting you add functions and variables to a package?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        info("package objects are closed")
+        info("there can be only one package object per package")
+        info("package objects enforce to have all the members of the package in the same file")
       }
     }
 
@@ -134,7 +137,6 @@ class Chapter07 extends FreeSpec with Matchers {
     }
   }
 }
-
 
 package object random {
 
