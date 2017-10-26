@@ -240,8 +240,44 @@ class Chapter05 extends FreeSpec with Matchers {
         |plate can also be specified in the constructor. If not, the model year is set to
         |-1 and the license plate to the empty string. Which constructor are you choosing
         |as the primary constructor? Why?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Car(val manufacturer: String, val model: String, val year: Int, var licencePlate: String) {
+          def this(manufacturer: String, model: String, year: Int) {
+            this(manufacturer, model, year, "")
+          }
+
+          def this(manufacturer: String, model: String, licencePlate: String) {
+            this(manufacturer, model, -1, licencePlate)
+          }
+
+          def this(manufacturer: String, model: String) {
+            this(manufacturer, model, -1, "")
+          }
+        }
+
+        val manufacturer = "Fiat"
+        val model = "Punto"
+        val year = 2000
+        val licensePlate = "1234 ABC"
+        val car1 = new Car(manufacturer, model, year, licensePlate)
+        val car2 = new Car(manufacturer, model, year)
+        val car3 = new Car(manufacturer, model, licensePlate)
+        val car4 = new Car(manufacturer, model)
+
+        car1.year should be(year)
+        car2.year should be(year)
+        car3.year should be(-1)
+        car4.year should be(-1)
+
+        car1.licencePlate should be(licensePlate)
+        car2.licencePlate should be("")
+        car3.licencePlate should be(licensePlate)
+        car4.licencePlate should be("")
+
+        info("The primary constructor is the one that contains all the parameters")
+        info("Auxiliary constructors need to call other auxiliary constructors or the primary constructors")
+        info("This is why primary constructor having all the parameters is the best choice")
       }
     }
 
