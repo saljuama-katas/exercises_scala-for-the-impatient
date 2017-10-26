@@ -87,8 +87,40 @@ class Chapter05 extends FreeSpec with Matchers {
         |before(other: Time): Boolean that checks whether this time comes before the other.
         |A Time object should be constructed as new Time(hrs, min), where hrs is in
         |military time format (between 0 and 23).
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Time(hrs: Int, min: Int) {
+          if (hrs < 0 || hrs > 23) throw new IllegalArgumentException("Invalid hours")
+          if (min < 0 || min > 59) throw new IllegalArgumentException("Invalid minutes")
+          private val hour = hrs
+          private val minute = min
+
+          def hours: Int = hour
+
+          def minutes: Int = minute
+
+          def before(other: Time): Boolean = {
+            if (other.hours < this.hours) false
+            else if (other.hours == this.hours && other.minutes <= this.minutes) false
+            else true
+          }
+        }
+
+        val midnight = new Time(0, 0)
+
+        midnight.hours should be(0)
+        midnight.minutes should be(0)
+
+        "midnight.hours = 2" shouldNot compile
+        "midnight.minutes = 10" shouldNot compile
+
+        val midday = new Time(12, 0)
+
+        midnight.before(midday) should be(true)
+        midday.before(midnight) should be(false)
+
+        an[IllegalArgumentException] should be thrownBy new Time(24, 0)
+        the[IllegalArgumentException] thrownBy new Time(23, 64) should have message "Invalid minutes"
       }
     }
 
