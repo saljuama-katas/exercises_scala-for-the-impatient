@@ -81,8 +81,9 @@ class Chapter07 extends FreeSpec with Matchers {
     "Exercise 5" - {
       """--------
         |What is the meaning of private[com] def giveRaise(rate: Double)? Is it useful?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        info("giveRaise method is now accessible up to package `com` in the nested hierarchy")
       }
     }
 
