@@ -58,8 +58,21 @@ class Chapter06 extends FreeSpec with Matchers {
       """--------
         |Define an Origin object that extends java.awt.Point. Why is this not actually
         |a good idea? (Have a close look at the methods of the Point class.)
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object Origin extends java.awt.Point
+
+        val origin = Origin
+
+        origin.x should be(0)
+        origin.y should be(0)
+
+        origin.x = 2
+        origin.y = 7
+        origin.x should be(2)
+        origin.y should be(7)
+
+        info("java.awt.Point implementation offers mutability")
       }
     }
 
