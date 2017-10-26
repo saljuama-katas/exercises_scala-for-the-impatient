@@ -30,8 +30,27 @@ class Chapter06 extends FreeSpec with Matchers {
         |The preceding problem wasn't very object-oriented. Provide a general superclass
         |UnitConversion and define objects InchesToCentimeters, GallonsToLiters, and
         |MilesToKilometers that extend it.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        abstract class UnitConversion {
+          def apply(value: Double): Double
+        }
+
+        object InchesToCentimeters extends UnitConversion {
+          override def apply(value: Double): Double = value * 2.54
+        }
+
+        object GallonsToLiters extends UnitConversion {
+          override def apply(value: Double): Double = value / 0.26417
+        }
+
+        object MilesToKilometers extends UnitConversion {
+          override def apply(value: Double): Double = value * 1.609344
+        }
+
+        InchesToCentimeters(1.0) should be(2.54)
+        GallonsToLiters(1.0) should be(3.7854411931710636)
+        MilesToKilometers(1.0) should be(1.609344)
       }
     }
 
