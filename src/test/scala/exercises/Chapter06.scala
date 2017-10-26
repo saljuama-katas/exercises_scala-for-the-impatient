@@ -11,8 +11,17 @@ class Chapter06 extends FreeSpec with Matchers {
       """--------
         |Write an object Conversions with methods inchesToCentimeters, gallonsToLiters
         |and milesToKilometers.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object Conversions {
+          def inchesToCentimeters(inches: Double): Double = inches * 2.54
+          def gallonsToLiters(gallons: Double): Double = gallons / 0.26417 // assuming US gallons liquid
+          def milesToKilometers(miles: Double): Double = miles * 1.609344
+        }
+
+        Conversions.inchesToCentimeters(1.0) should be(2.54)
+        Conversions.gallonsToLiters(1.0) should be(3.7854411931710636)
+        Conversions.milesToKilometers(1.0) should be(1.609344)
       }
     }
 
