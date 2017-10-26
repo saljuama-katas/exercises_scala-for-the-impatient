@@ -130,8 +130,17 @@ class Chapter07 extends FreeSpec with Matchers {
         |  import javax._
         |
         |Is this a good idea?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        import java._
+
+        // this usually would yield a scala one, but with the import its a java one
+        val javaRnd = new util.Random()
+        // to get a scala random one should specify specifically the scala package
+        val scalaRnd = new scala.util.Random()
+
+        info("the java._ import overrides the default scala._ import in some classes")
+        //couldn't find a proper javax example yet
       }
     }
 
