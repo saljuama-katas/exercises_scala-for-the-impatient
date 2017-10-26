@@ -10,15 +10,32 @@ class Chapter05 extends FreeSpec with Matchers {
     "Exercise 1" - {
       """--------
         |Improve the Counter class in Section 5.1, “Simple Classes and Parameterless Methods,”
-        |on page 55 so that it doesn’t turn negative at Int.MaxValue.
+        |on page 55 so that it doesn't turn negative at Int.MaxValue.
         |
         |  class Counter {
         |    private var value = 0
         |    def increment() { value += 1 }
         |    def current() = value
         |  }
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Counter {
+          private var value = 0
+
+          def current() = value
+
+          def increment() {
+            if (value < Int.MaxValue) value += 1
+          }
+        }
+
+        val counter = new Counter()
+
+        (1 to Int.MaxValue) foreach { _ => counter.increment() }
+        counter.current() should be(Int.MaxValue)
+
+        counter.increment()
+        counter.current() should be(Int.MaxValue)
       }
     }
 
