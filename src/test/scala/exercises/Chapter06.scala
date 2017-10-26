@@ -161,8 +161,23 @@ class Chapter06 extends FreeSpec with Matchers {
       """--------
         |Write an enumeration describing the eight corners of the RGB color
         |cube. As IDs, use the color values (for example, 0xff0000 for Red).
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object RgbCorners extends Enumeration {
+          type RgbCorners = Value
+          val Red: RgbCorners = Value(0xff0000)
+          val Green: RgbCorners = Value(0x00ff00)
+          val Blue: RgbCorners = Value(0x0000ff)
+          val Yellow: RgbCorners = Value(0xffff00)
+          val Magenta: RgbCorners = Value(0xff00ff)
+          val Cyan: RgbCorners = Value(0x00ffff)
+          val Black: RgbCorners = Value(0x000000)
+          val White: RgbCorners = Value(0xffffff)
+        }
+
+        import RgbCorners._
+
+        Red.id + Blue.id should be(Magenta.id)
       }
     }
   }
