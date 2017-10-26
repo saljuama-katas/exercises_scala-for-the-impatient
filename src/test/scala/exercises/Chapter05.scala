@@ -194,8 +194,17 @@ class Chapter05 extends FreeSpec with Matchers {
         |  public class Person {
         |    public int age;
         |  }
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        class Person(_age: Int) {
+          val age: Int = if (_age > 0) _age else 0
+        }
+
+        val john = new Person(12)
+        val peter = new Person(-17)
+
+        john.age should be(12)
+        peter.age should be(0)
       }
     }
 
