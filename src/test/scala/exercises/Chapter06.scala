@@ -113,9 +113,21 @@ class Chapter06 extends FreeSpec with Matchers {
       """--------
         |Write an enumeration describing the four playing card suits so that the
         |toString method returns ♥, ♠, ♦ or ♣
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object CardSuite extends Enumeration {
+          type CardSuite = Value
+          val Clubs: CardSuite = Value("♣")
+          val Diamonds: CardSuite = Value("♦")
+          val Hearts: CardSuite = Value("♥")
+          val Spades: CardSuite = Value("♠")
+        }
 
+        import CardSuite._
+        Clubs.toString should be("♣")
+        Diamonds.toString should be("♦")
+        Hearts.toString should be("♥")
+        Spades.toString should be("♠")
       }
     }
 
