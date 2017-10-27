@@ -48,8 +48,7 @@ class Chapter07 extends FreeSpec with Matchers {
         |is seed.
       """.stripMargin in {
 
-        // see implementation after Chapter07 spec class
-        import random._
+        import random._ // see implementation below
 
         setSeed(10)
         val firstInt = nextInt()
@@ -57,8 +56,10 @@ class Chapter07 extends FreeSpec with Matchers {
         val firstDouble = nextDouble()
         val secondDouble = nextDouble()
 
+        // this is to couple the test to the implementation, don't do this!
         val calculatedNextInt = (seed: Int) => (seed * 1664525 + 1013904223) % math.pow(2.0, 32).toInt
         val calculatedNextDouble = (seed: Double) => (seed * 1664525 + 1013904223) % math.pow(2.0, 32)
+
         firstInt should be(calculatedNextInt(10))
         secondInt should be(calculatedNextInt(firstInt))
         firstDouble should be(calculatedNextDouble(10.0))
@@ -72,6 +73,7 @@ class Chapter07 extends FreeSpec with Matchers {
         |syntax instead of simply letting you add functions and variables to a package?
       """.stripMargin in {
 
+        info("packages are open")
         info("package objects are closed")
         info("there can be only one package object per package")
         info("package objects enforce to have all the members of the package in the same file")
@@ -93,20 +95,23 @@ class Chapter07 extends FreeSpec with Matchers {
         |Scala hash map. Use imports to rename both classes.
       """.stripMargin in {
 
+
         import java.util.{HashMap => JavaMap}
 
         import collection.mutable.{HashMap => ScalaMap}
 
-        def copyMap[K <: Any, V <: Any](input: JavaMap[K, V]): ScalaMap[K, V] = {
-          val result = new ScalaMap[K, V]()
-          input forEach { (k, v) => result += k -> v }
-          result
+        object MapConverter {
+          def copyMap[K <: Any, V <: Any](input: JavaMap[K, V]): ScalaMap[K, V] = {
+            val result = new ScalaMap[K, V]()
+            input forEach { (k, v) => result += k -> v }
+            result
+          }
         }
 
         val javaMap = new JavaMap[Int, String]()
         javaMap.put(1, "Hello")
         javaMap.put(2, "World")
-        val scalaMap: ScalaMap[Int, String] = copyMap(javaMap)
+        val scalaMap: ScalaMap[Int, String] = MapConverter.copyMap(javaMap)
 
         scalaMap.size shouldBe 2
         scalaMap(1) shouldBe "Hello"
@@ -117,8 +122,30 @@ class Chapter07 extends FreeSpec with Matchers {
     "Exercise 7" - {
       """--------
         |In the preceding exercise, move all imports into the innermost scope possible.
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        object MapConverter {
+
+          import java.util.{HashMap => JavaMap}
+
+          import collection.mutable.{HashMap => ScalaMap}
+
+          def copyMap[K <: Any, V <: Any](input: JavaMap[K, V]): ScalaMap[K, V] = {
+            val result = new ScalaMap[K, V]()
+            input forEach { (k, v) => result += k -> v }
+            result
+          }
+        }
+
+        val javaMap = new java.util.HashMap[Int, String]()
+        javaMap.put(1, "Hello")
+        javaMap.put(2, "World")
+
+        val scalaMap: collection.mutable.HashMap[Int, String] = MapConverter.copyMap(javaMap)
+
+        scalaMap.size shouldBe 2
+        scalaMap(1) shouldBe "Hello"
+        scalaMap.get(2) shouldBe Some("World")
       }
     }
 
