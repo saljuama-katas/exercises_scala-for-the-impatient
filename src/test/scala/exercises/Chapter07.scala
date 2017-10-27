@@ -181,8 +181,16 @@ class Chapter07 extends FreeSpec with Matchers {
     "Exercise 10" - {
       """---------
         |Apart from StringBuilder, what other members of java.lang does the scala package override?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        info("Boolean")
+        info("Double")
+        info("Exception")
+        info("Float")
+        info("Iterable")
+        info("Long")
+        info("Short")
+        info("String")
       }
     }
   }
