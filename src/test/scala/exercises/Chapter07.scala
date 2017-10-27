@@ -151,8 +151,30 @@ class Chapter07 extends FreeSpec with Matchers {
         |and prints a message to the standard error stream if the password is not
         |"secret". Otherwise, print a greeting to the standard output stream. Do not
         |use any other imports, and do not use any qualified names (with dots).
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        def login(): String = {
+          import java.lang.System._
+
+          import io.StdIn._
+          val username: String = getProperty("user.name")
+          val password: String = readLine()
+          if (password == "secret") s"Hello $username"
+          else "Invalid password"
+        }
+
+        import java.io.ByteArrayInputStream
+
+        System.setProperty("user.name", "John")
+        val secretIn = new ByteArrayInputStream("secret".getBytes)
+        Console.withIn(secretIn) {
+          login() should be("Hello John")
+        }
+
+        val invalidIn = new ByteArrayInputStream("somethingElse".getBytes)
+        Console.withIn(invalidIn) {
+          login() should be("Invalid password")
+        }
       }
     }
 
