@@ -1,11 +1,17 @@
 package exercises
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, MustMatchers}
 
 
-class Chapter17 extends FreeSpec with Matchers {
+class Chapter17 extends FreeSpec with MustMatchers {
 
   "Futures" - {
+    // To use futures
+    import scala.concurrent.Future
+
+    // To test the results, I'd say it's ok to block on tests for assertions
+    import scala.concurrent.Await
+    import scala.concurrent.duration._
 
     "Exercise 1" - {
       """--------
@@ -21,6 +27,15 @@ class Chapter17 extends FreeSpec with Matchers {
         |In which thread does the call to println occur?
       """.stripMargin ignore {
 
+        val n1 = Future {
+          Thread.sleep(1000); 2
+        }
+        val n2 = Future {
+          Thread.sleep(1000); 40
+        }
+        val combined = n1.flatMap(result1 => n2.map(result2 => result1 + result2))
+
+        Await.ready(combined, 2.seconds) mustBe 42
       }
     }
 
