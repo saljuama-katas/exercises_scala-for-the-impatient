@@ -98,8 +98,25 @@ class Chapter17 extends FreeSpec with MustMatchers {
         |Write a function doTogether that, given two functions f: T => Future[U] and
         |g: U => Future[V], produces a function T => Future[(U, V)], running the two
         |computations in parallel and, for a given t, eventually yielding (f(t), g(t)).
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        def doTogether[T, U, V](f: T => Future[U], g: T => Future[V]): T => Future[(U, V)] = {
+          t => {
+            val ft = f(t)
+            val gt = g(t)
+            for (t1 <- ft; t2 <- gt) yield (t1, t2)
+          }
+        }
+
+        val f = (value: String) => Future {
+          Thread.sleep(700); value.toInt
+        }
+        val g = (value: String) => Future {
+          Thread.sleep(700); value.toList
+        }
+
+        val result = doTogether(f, g)("42")
+        Await.result(result, 1.second) mustBe(42, List('4', '2'))
       }
     }
 
