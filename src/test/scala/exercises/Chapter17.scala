@@ -69,8 +69,27 @@ class Chapter17 extends FreeSpec with MustMatchers {
     "Exercise 3" - {
       """--------
         |Repeat the preceding exercise for any sequence of functions of type T => Future[T].
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        def doInOrder[T](functions: Seq[T => Future[T]]): T => Future[T] = { t =>
+          functions match {
+            case head :: Nil => head(t)
+            case head :: tail => head(t).flatMap(doInOrder(tail)(_))
+          }
+        }
+
+        val f1 = (value: Int) => Future {
+          value + 7
+        }
+        val f2 = (value: Int) => Future {
+          value * 2
+        }
+        val f3 = (value: Int) => Future {
+          value - 5
+        }
+
+        val result = doInOrder(Seq(f1, f2, f3))(7)
+        Await.result(result, 1.second) mustBe 23
       }
     }
 
