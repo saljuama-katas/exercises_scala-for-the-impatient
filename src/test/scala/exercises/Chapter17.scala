@@ -6,6 +6,9 @@ import org.scalatest.{FreeSpec, MustMatchers}
 class Chapter17 extends FreeSpec with MustMatchers {
 
   "Futures" - {
+    // To have an ExecutionContext
+    import scala.concurrent.ExecutionContext.Implicits.global
+
     // To use futures
     import scala.concurrent.Future
 
@@ -25,17 +28,18 @@ class Chapter17 extends FreeSpec with MustMatchers {
         |How is the expression translated to map and flatMap calls?
         |Are the two futures executed concurrently or one after the other?
         |In which thread does the call to println occur?
-      """.stripMargin ignore {
+      """.stripMargin in {
 
-        val n1 = Future {
-          Thread.sleep(1000); 2
+        val f1 = Future {
+          Thread.sleep(1000)
+          2
         }
-        val n2 = Future {
-          Thread.sleep(1000); 40
+        val f2 = Future {
+          Thread.sleep(1000)
+          40
         }
-        val combined = n1.flatMap(result1 => n2.map(result2 => result1 + result2))
-
-        Await.ready(combined, 2.seconds) mustBe 42
+        for (n1 <- f1; n2 <- f2) n1 + n2 mustBe 42
+        Await.result(f1.flatMap(n1 => f2.map(n2 => n1 + n2)), 3.seconds) mustBe 42
       }
     }
 
@@ -44,8 +48,21 @@ class Chapter17 extends FreeSpec with MustMatchers {
         |Write a function doInOrder that, given two functions f: T => Future[U]
         |and g: U => Future[V], produces a function T => Future[U] that, for a
         |given t, eventually yields g(f(t)).
-      """.stripMargin ignore {
+      """.stripMargin in {
 
+        def doInOrder[T, U, V](f: T => Future[U], g: U => Future[V]): T => Future[V] = {
+          t => f(t).flatMap(u => g(u))
+        }
+
+        val f = (s: String) => Future {
+          s.toInt
+        }
+        val g = (i: Int) => Future {
+          i.toLong
+        }
+
+        val futureResult = doInOrder(f, g)("42")
+        Await.result(futureResult, 1.second) mustBe 42L
       }
     }
 
